@@ -10,8 +10,22 @@ h1{
     border:3px solid green;
 }
 #home-intro:hover{
-     background-color : yellow;
+     background-color :white;
 }
 #p2{
     color: blueviolet;
+}
+#nav{
+    text-align:center;
+    background-color: brown;
+    height:25px;
+    padding-top:5px;
+    margin-bottom:5px;
+}
+#nav a{
+    margin: 0px 5px;
+    /*margin : y-axis x-axis*/
+    text-decoration: none;
+    color:beige;
+
 }
