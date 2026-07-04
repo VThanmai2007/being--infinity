@@ -1,74 +1,55 @@
 
 const users = [
-  {
-    name: "Jane Doe",
-    gender: "Female",
-    image: "./images/jane.png"
-  },
-  {
-    name: "John Doe",
-    gender: "Male",
-    image: "./images/john.png"
-  }
+    {
+        name: "Jane Doe",
+        gender: "Female",
+        image: "./images/jane.png"
+    },
+    {
+        name: "John Doe",
+        gender: "Male",
+        image: "./images/john.png"
+    }
 ];
 
-let curUserId = 0;
+let currentUser = 0;
 
-// Toggle between Jane and John
-function toggle() {
-  console.log("Toggle");
-
-  if (curUserId === 0) {
-    curUserId = 1;
-  } else {
-    curUserId = 0;
-  }
-
-  // Update image
-  document.getElementById("user-card-image").src = users[curUserId].image;
-
-  // Update name
-  document.getElementById("card-name").innerText = users[curUserId].name;
-
-  // Update gender
-  document.getElementById("card-gender").innerText = users[curUserId].gender;
+// Display User
+function displayUser(user) {
+    document.getElementById("img").src = user.image;
+    document.getElementById("card-name").innerText = user.name;
+    document.getElementById("card-gender").innerText = user.gender;
 }
 
-console.log("Hello from JS");
+// Toggle User
+function toggle() {
+    currentUser = (currentUser + 1) % users.length;
+    displayUser(users[currentUser]);
+}
 
 // Get Random User
 function getRandomUser() {
-  fetch("https://randomuser.me/api/")
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(parsedData) {
 
-      let user = parsedData.results[0];
+    fetch("https://randomuser.me/api/")
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
 
-      let gender = user.gender;
-      let name = user.name.first + " " + user.name.last;
-      let imageUrl = user.picture.large;
+            let user = data.results[0];
 
-      // Update gender
-      document.getElementById("card-gender").innerText = gender;
-
-      // Update name
-      document.getElementById("card-name").innerText = name;
-
-      // Update image
-      document.getElementById("user-card-image").src = imageUrl;
-    })
-    .catch(function(error) {
-      console.log("Error:", error);
-    });
+            document.getElementById("img").src = user.picture.large;
+            document.getElementById("card-name").innerText =
+                user.name.first + " " + user.name.last;
+            document.getElementById("card-gender").innerText =
+                user.gender;
+        })
+        .catch(function(error){
+            console.log(error);
+        });
 }
 
-// Button Events
-document
-  .getElementById("card-toggle-btn")
-  .addEventListener("click", toggle);
+// Show Jane on page load
+displayUser(users[currentUser]);
 
-document
-  .getElementById("random-btn")
-  .addEventListener("click", getRandomUser);
+console.log("JavaScript Loaded Successfully");
